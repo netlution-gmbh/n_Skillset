@@ -1,0 +1,171 @@
+{
+  "initialized": {
+    "value": "false",
+    "metadata": {
+      "label": "Initialized",
+      "description": "Determines whether the Setup Wizard ran",
+      "type": "boolean",
+      "isPrivate": "true"
+    }
+  },
+  "api": {
+    "value": {
+      "key": {
+        "value": "",
+        "metadata": {
+          "label": "API Key",
+          "description": "Secret Key für das ansprechen der API",
+          "type": "text"
+        }
+      }
+    },
+    "metadata": {
+      "label": "🗝️ Schlüssel",
+      "description": "Geheimnisse zum externen Zugriff",
+      "type": "group"
+    }
+  },
+  "msal": {
+    "value": {
+      "client_id": {
+        "value": "",
+        "metadata": {
+          "label": "Client ID",
+          "description": "Die Client-ID aus Ihrer Azure AD-Anwendungsregistrierung",
+          "type": "text"
+        }
+      },
+      "authority": {
+        "value": "",
+        "metadata": {
+          "label": "Authority",
+          "description": "Die Azure AD Authority-URL",
+          "type": "url"
+        }
+      },
+      "redirect_uri": {
+        "value": "",
+        "metadata": {
+          "label": "Redirect URI",
+          "description": "Die Azure AD Weiterleitungs-URI",
+          "type": "url"
+        }
+      }
+    },
+    "metadata": {
+      "label": "👥 Microsoft Authentifizierung",
+      "description": "Einstellungen für die Microsoft Authentication Library",
+      "type": "group"
+    }
+  },
+  "mail": {
+    "value": {
+      "client_id": {
+        "value": "",
+        "metadata": {
+          "label": "Client ID",
+          "description": "Die Client-ID der Azure AD-Anwendung für E-Mail-Versand",
+          "type": "text",
+          "isPrivate": "true"
+        }
+      },
+      "secret": {
+        "value": "",
+        "metadata": {
+          "label": "Client Secret",
+          "description": "Das Client Secret der Azure AD-Anwendung für E-Mail-Versand",
+          "type": "password",
+          "isPrivate": "true"
+        }
+      },
+      "tenant_id": {
+        "value": "",
+        "metadata": {
+          "label": "Tenant ID",
+          "description": "Die Azure AD Tenant-ID für E-Mail-Versand",
+          "type": "text",
+          "isPrivate": "true"
+        }
+      },
+      "from": {
+        "value": "",
+        "metadata": {
+          "label": "Absender Adresse",
+          "description": "E-Mail-Adresse von der gesendet werden soll",
+          "type": "email",
+          "isPrivate": "true"
+        }
+      }
+    },
+    "metadata": {
+      "label": "E-Mail Konfiguration",
+      "description": "Konfiguration für den E-Mail-Versand über Microsoft Graph"
+    }
+  },
+  "frontend": {
+    "value": {
+      "app_name": {
+        "value": "",
+        "metadata": {
+          "label": "Anwendungsname",
+          "description": "Anzeigename der Anwendung",
+          "type": "text"
+        }
+      },
+        "company_name": {
+          "value": "",
+          "metadata": {
+            "label": "Firmenname",
+            "description": "Name der Firma",
+            "type": "text"
+          }
+        },
+      "company_logo":  {
+        "value": "",
+        "metadata": {
+          "label": "Firmen Logo",
+          "description": "Ihr Logo welches im Header angezeigt wird",
+          "type": "image"
+        }
+},
+      "urls": {
+        "value": {
+          "help": {
+            "value": "",
+            "metadata": {
+              "label": "Hilfe - URL",
+              "description": "Link zur Hilfe Dokumentation",
+              "type": "url"
+            }
+          },
+          "bug_report": {
+            "value": "",
+            "metadata": {
+              "label": "Fehler melden - URL",
+              "description": "Link zum Issue Tracker",
+              "type": "url"
+            }
+          },
+          "contact": {
+            "value": "",
+            "metadata": {
+              "label": "Kontakt - URL",
+              "description": "Link zum Kontakt, kann auch ein \"mailto:\" sein.",
+              "type": "text"
+            }
+          }
+        },
+        "metadata": {
+          "label": "URLs",
+          "description": "URLs die im Footer angezeigt werden",
+          "type": "group"
+        }
+      }
+    },
+    "metadata": {
+      "label": "🎨 Frontend Einstellungen",
+      "description": "Allgemeine Frontend Konfiguration",
+      "type": "group"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/*https://patternico.com/#MoJ20OvM3hDfSam8*/
+body {
+    background-image: url("/images/background.png");
+    background-repeat: repeat;
+
+
+}
