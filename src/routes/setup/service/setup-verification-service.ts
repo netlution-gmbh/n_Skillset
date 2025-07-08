@@ -1,6 +1,8 @@
 import { PublicClientApplication } from '@azure/msal-browser';
 import { AuthService } from '$lib/services/authService';
 import type { EmailTestRequest } from '$lib/types/email';
+import { browser } from '$app/environment';
+import { authenticatedFetch } from '$lib/helpers/fetchHelpers';
 
 export interface ValidationResult {
 	isValid: boolean;
@@ -231,7 +233,12 @@ export class SetupVerificationService {
 				to: testEmailAddress
 			};
 
-			const response = await fetch('/api/admin/mail/test', {
+			let fetchCall = fetch
+
+			if(browser)
+				fetchCall = authenticatedFetch
+
+			const response = await fetchCall('/api/admin/mail/test', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
