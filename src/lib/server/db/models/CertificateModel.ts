@@ -4,7 +4,6 @@ import { sequelize } from '$lib/server/db/database-connection-manager';
 export class CertificateModel extends Model {
 	declare id: number;
 	declare name: string;
-	declare userSkillId: number;
 	declare userId: number;
 	declare date: Date;
 	declare renewal_date: Date;
@@ -22,14 +21,6 @@ CertificateModel.init(
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false
-		},
-		userSkillId: {
-			type: DataTypes.INTEGER, // Foreign key to UserSkill table
-			allowNull: true,
-			references: {
-				model: 'user_skills', // References the UserSkill table
-				key: 'id'
-			}
 		},
 		userId: {
 			type: DataTypes.INTEGER, // Foreign key to User table

@@ -14,7 +14,7 @@ export const handle: Handle = async ({ event, resolve}) => {
 			await ServerConfigService.initialize();
 			databaseReady = true;
 		}
-
+	}
 	// Check for valid session token for all API routes except /api/config
 	if (event.url.pathname.startsWith('/api') && !event.url.pathname.startsWith('/api/config')) {
 		// Use the auth middleware
@@ -24,7 +24,6 @@ export const handle: Handle = async ({ event, resolve}) => {
 		if (!authResponse.ok) {
 			return authResponse;
 		}
-	}
 
 	}
 	return resolve(event);
