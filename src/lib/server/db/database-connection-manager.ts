@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import { env } from '$env/dynamic/private';
+import { env as publicEnv } from '$env/dynamic/public';
 
 // Define the interface for ConnectionStatus
 export interface ConnectionStatus {
@@ -14,7 +15,15 @@ export const sequelize = new Sequelize({
 	username: env.POSTGRES_USER,
 	password: env.POSTGRES_PASSWORD,
 	database: env.POSTGRES_DB,
-	logging: env.NODE_ENV === 'development' ? console.log : false,
+	logging: publicEnv.PUBLIC_DEV_MODE === 'true' ? console.log : false,
+	dialectOptions:
+		publicEnv.PUBLIC_DEV_MODE === 'true'
+			? {}
+			: {
+					ssl: {
+						require: true
+					}
+				},
 	pool: {
 		max: 5,
 		min: 0,
