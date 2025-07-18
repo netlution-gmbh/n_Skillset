@@ -42,11 +42,6 @@ const associateModels = () => {
 		as: 'skillset' // Added an alias
 	});
 
-	UserSkillModel.hasMany(CertificateModel, {
-		foreignKey: 'userSkillId',
-		as: 'certificates'
-	});
-
 	// Config associations
 	ConfigModel.belongsTo(UserModel, {
 		foreignKey: 'updatedBy',
