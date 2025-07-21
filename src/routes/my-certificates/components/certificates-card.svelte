@@ -37,8 +37,16 @@
 
 	// Helper function to format dates for input elements
 	function formatDateForInput(date: Date | null): string {
-		if (!date || date.getTime() === 0) return '';
-		return new Date(date).toISOString().split('T')[0];
+		if (!date) return '';
+
+		// Handle both Date objects and date strings
+		const dateObj = date instanceof Date ? date : new Date(date);
+
+		// Check if it's a valid date and not epoch zero
+		if (isNaN(dateObj.getTime()) || dateObj.getTime() === 0) return '';
+
+		return dateObj.toISOString().split('T')[0];
+
 	}
 
 	// Helper function to format display dates
