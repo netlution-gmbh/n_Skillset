@@ -5,6 +5,7 @@ import { redirect } from '@sveltejs/kit';
 import { configGuard } from '$lib/guards/config.guard';
 import type { ConnectionStatus } from '$lib/server/db/database-connection-manager';
 import { decodeErrorToken, showErrorPage } from '$lib/helpers/errorHelper';
+import { managerGuard } from '$lib/guards/manager.guard';
 
 export const load = async ({ url, fetch }) => {
 	const isErrorRoute = url.pathname.startsWith('/error');
@@ -46,6 +47,16 @@ export const load = async ({ url, fetch }) => {
 			return showErrorPage({
 				title: 'Admin Access Required',
 				message: 'This action requires administrator privileges.'
+			});
+		}
+
+		// Check Manager
+		authorizedForRoute = await managerGuard();
+
+		if (!authorizedForRoute) {
+			return showErrorPage({
+				title: 'Manager or Admin Access Required',
+				message: 'This action requires manager or administrator privileges.'
 			});
 		}
 

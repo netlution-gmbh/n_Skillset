@@ -1,11 +1,13 @@
 export interface ManagedUserDetails {
-	id: string;
+	id: number;
+	accountId: string;
 	email: string;
 	name: string;
 }
 
 export interface SkillStatistics {
-	id: string;
+	id: number;
+	accountId: string;
 	skillsCount: number;
 	skillsWithExperience: number;
 	lastChange: Date;

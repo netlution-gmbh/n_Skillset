@@ -83,6 +83,65 @@ export class MsalAuthService extends BaseAuthService {
 		}
 	}
 
+	async verifyManagerAccess(authHeader: string, userId: string, targetAccountId: string): Promise<boolean> {
+		try {
+			const isAdmin = await this.verifyAdminAccess(authHeader, userId);
+			if (isAdmin) {
+				return true;
+			}
+
+			return await this.verifyDirectManagerAccess(authHeader, targetAccountId);
+
+
+		} catch (error) {
+			console.error('Error verifying manager access:', error);
+			return false;
+		}
+	}
+
+
+	private async verifyDirectManagerAccess(authHeader: string, targetAccountId: string): Promise<boolean> {
+		try {
+			const accessToken = this.extractBearerToken(authHeader);
+			if (!accessToken) return false;
+
+			// Get current user's email first
+			const userResponse = await fetch('https://graph.microsoft.com/v1.0/me?$select=mail', {
+				headers: {
+					'Authorization': `Bearer ${accessToken}`,
+					'Content-Type': 'application/json'
+				}
+			});
+
+			if (!userResponse.ok) return false;
+
+			const userData = await userResponse.json();
+			const managerEmail = userData.mail;
+
+			// Get the manager's direct reports
+			const reportsResponse = await fetch(
+				`https://graph.microsoft.com/v1.0/users/${managerEmail}/directReports?$select=id`,
+				{
+					headers: {
+						'Authorization': `Bearer ${accessToken}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+
+			if (!reportsResponse.ok) return false;
+
+			const reportsData = await reportsResponse.json();
+
+			// Check if the target user is in the direct reports
+			return reportsData.value.some((report: { id: string }) => report.id === targetAccountId);
+		} catch (error) {
+			console.error('Error verifying direct manager access:', error);
+			return false;
+		}
+	}
+
+
 	private static startCleanupInterval(): void {
 		this.cleanupInterval = setInterval(() => {
 			this.cleanExpiredTokens();

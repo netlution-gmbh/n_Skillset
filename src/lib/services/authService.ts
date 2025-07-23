@@ -140,7 +140,7 @@ export class AuthService {
 
 			const data = await response.json();
 			const users = data.value.map((user: { id: string; mail: string; displayName: string; }) => ({
-				id: user.id,
+				accountId: user.id,
 				email: user.mail,
 				name: user.displayName
 			}));

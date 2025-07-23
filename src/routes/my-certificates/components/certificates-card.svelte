@@ -5,19 +5,13 @@
 		Checkbox,
 		Input,
 		Label,
-		Modal,
-		Table,
-		TableBody,
-		TableBodyCell,
-		TableBodyRow,
-		TableHead,
-		TableHeadCell
+		Modal
 	} from 'flowbite-svelte';
 	import type { Certificate } from '$lib/types/skills';
-	import { PenSolid, TrashBinSolid } from 'flowbite-svelte-icons';
 	import { CertificateService } from '$lib/services/certificateService';
 	import { certificatesStore } from '$lib/stores/certificatesStore';
 	import DeleteConfirmation from '../../../components/shared/modals/delete-confirmation.svelte';
+	import CertificateTable from '../../../components/shared/certificate-table/certificate-table.svelte';
 
 	export let certificates: Certificate[] = [];
 
@@ -47,12 +41,6 @@
 
 		return dateObj.toISOString().split('T')[0];
 
-	}
-
-	// Helper function to format display dates
-	function formatDisplayDate(date: Date | null): string {
-		if (!date) return '/';
-		return new Date(date).toLocaleDateString('de-DE');
 	}
 
 	// Helper function to check if renewal date is valid
@@ -201,53 +189,12 @@
 			Hier findest du eine Übersicht über deine Zertifikate, wann diese abgeschlossen wurden und wann diese verfallen.
 		</p>
 
-		<Table striped={true}>
-			<TableHead>
-				<TableHeadCell>Zertifikat Name</TableHeadCell>
-				<TableHeadCell>Abgeschlossen am</TableHeadCell>
-				<TableHeadCell>Gültig bis</TableHeadCell>
-				<TableHeadCell>Aktionen</TableHeadCell>
-			</TableHead>
-			<TableBody>
-				{#each certificates as certificate (certificate.id)}
-					<TableBodyRow>
-						<TableBodyCell>{certificate.name}</TableBodyCell>
-						<TableBodyCell>{formatDisplayDate(certificate.date)}</TableBodyCell>
-						<TableBodyCell>
-							{hasValidRenewalDate(certificate) ? formatDisplayDate(certificate.renewal_date) : '/'}
-						</TableBodyCell>
-						<TableBodyCell>
-							<div class="flex gap-2">
-								<Button
-									size="xs"
-									color="primary"
-									on:click={() => editCertificate(certificate)}
-									aria-label="Zertifikat bearbeiten"
-								>
-									<PenSolid class="w-3 h-3" />
-								</Button>
-								<Button
-									size="xs"
-									color="red"
-									on:click={() => initiateCertificateDelete(certificate)}
-									aria-label="Zertifikat löschen"
-								>
-									<TrashBinSolid class="w-3 h-3" />
-								</Button>
-							</div>
-						</TableBodyCell>
-					</TableBodyRow>
-				{:else}
-					<TableBodyRow>
-						<TableBodyCell colspan="4">
-							<div class="text-center py-4 text-gray-500">
-								Keine Zertifikate vorhanden
-							</div>
-						</TableBodyCell>
-					</TableBodyRow>
-				{/each}
-			</TableBody>
-		</Table>
+		<CertificateTable
+			{certificates}
+			readonly={false}
+			onEdit={editCertificate}
+			onDelete={initiateCertificateDelete}
+		/>
 
 		<div class="mt-4 flex justify-end">
 			<Button

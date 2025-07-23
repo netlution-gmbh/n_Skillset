@@ -3,7 +3,8 @@ import { SkillsetModel, UserModel, UserSkillModel } from '$lib/server/db/models'
 import type { UserSkill } from '$lib/types/skills';
 
 interface ManagedUser {
-	id: string;
+	id: number;
+	accountId: string;
 	skillsCount: number;
 	skillsWithExperience: number;
 	lastChange: Date | null;
@@ -87,7 +88,8 @@ export const GET = async ({ params }) => {
 	}).length;
 
 	const managedUser: ManagedUser = {
-		id: user.accountId, // Return the accountId as the id
+		id: user.id,
+		accountId: user.accountId, // Return the accountId as the id
 		skillsCount: userSkills.length,
 		skillsWithExperience: skillsWithExperience,
 		lastChange
