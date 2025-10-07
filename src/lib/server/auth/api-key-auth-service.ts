@@ -13,16 +13,7 @@ export class ApiKeyAuthService extends BaseAuthService {
 			};
 		}
 
-		const [type, key] = authHeader.split(' ');
-		if (type !== 'Bearer' || !key) {
-			return {
-				success: false,
-				error: 'Invalid authorization header format',
-				statusCode: 401
-			};
-		}
-
-		const isValid = await this.validateApiKey(key);
+		const isValid = await this.validateApiKey(authHeader);
 
 		if (!isValid) {
 			return {

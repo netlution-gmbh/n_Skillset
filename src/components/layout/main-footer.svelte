@@ -23,7 +23,7 @@
 		<FooterLinkGroup ulClass="flex flex-wrap items-center mt-3 text-sm text-gray-300 dark:text-gray-400 sm:mt-0 ">
 			<FooterLink class="text-white" href="{helpURL}" target="_blank">Hilfe</FooterLink>
 			<FooterLink href="{contactURL}" target="_blank">Kontakt</FooterLink>
-			<Button class="bg-transparent border-gray-50 text-gray-50" color="light" on:click="{() => goto(bugReportURL)}" outline
+			<Button class="bg-transparent border-gray-50 text-gray-50" color="light" on:click="{() => window.open(bugReportURL)}" outline
 							target="_blank">Fehler
 				melden
 			</Button>
