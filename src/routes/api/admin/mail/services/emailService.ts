@@ -100,7 +100,15 @@ export class EmailService {
 	}
 
 	private static prepareTemplate(templateData: TemplateData, templateFilePath: string) {
-		const template = readFileSync(templateFilePath, 'utf-8');
+		// Validate that the template path is within the templates directory
+		const templatesDir = path.resolve(__dirname, '../templates');
+		const resolvedPath = path.resolve(templateFilePath);
+
+		if (!resolvedPath.startsWith(templatesDir)) {
+			throw new Error('Invalid template path: path traversal detected');
+		}
+
+		const template = readFileSync(resolvedPath, 'utf-8');
 
 		// Replace all placeholders with actual data
 		return template
